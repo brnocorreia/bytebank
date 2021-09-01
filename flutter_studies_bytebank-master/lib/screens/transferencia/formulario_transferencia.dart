@@ -1,18 +1,19 @@
+import 'package:bytebank/http/web_client.dart';
 import 'package:bytebank/models/contato.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
 
-class FormularioTransferencias extends StatefulWidget {
+class FormularioTransferencia extends StatefulWidget {
   final Contato contato;
 
-  FormularioTransferencias(this.contato);
+  FormularioTransferencia(this.contato);
 
   @override
-  _FormularioTransferenciasState createState() =>
-      _FormularioTransferenciasState();
+  _FormularioTransferenciaState createState() =>
+      _FormularioTransferenciaState();
 }
 
-class _FormularioTransferenciasState extends State<FormularioTransferencias> {
+class _FormularioTransferenciaState extends State<FormularioTransferencia> {
   final TextEditingController _valueController = TextEditingController();
 
   double? get valor => null;
@@ -65,6 +66,9 @@ class _FormularioTransferenciasState extends State<FormularioTransferencias> {
                           double.tryParse(_valueController.text);
                       final transferenciaCriada =
                           Transferencia(valor!, widget.contato);
+                      save(transferenciaCriada).then((transferenciaRecebida) {
+                        Navigator.pop(context);
+                      });
                     },
                   ),
                 ),

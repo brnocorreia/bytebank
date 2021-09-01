@@ -46,7 +46,7 @@ class ListaContatosState extends State<ListaContatos> {
                       onClick: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
-                                FormularioTransferencias(contato)));
+                                FormularioTransferencia(contato)));
                       },
                     );
                   },
@@ -78,7 +78,7 @@ class _ItemContato extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        onTap: () => onClick,
+        onTap: () => onClick(),
         title: Text(
           contato.nome,
           style: TextStyle(fontSize: 24.0),
