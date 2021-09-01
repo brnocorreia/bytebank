@@ -27,8 +27,9 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
+Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
+
 Future<List<Transferencia>> findAll() async {
-  Client client = InterceptedClient.build(interceptors: [LoggingInterceptor()]);
   final Response response = await client
       .get(Uri.http('192.168.0.108:8080', 'transactions'))
       .timeout(Duration(seconds: 10));
@@ -47,4 +48,34 @@ Future<List<Transferencia>> findAll() async {
     transferencias.add(transferencia);
   }
   return transferencias;
+}
+
+Future<Transferencia> save(Transferencia transferencia) async {
+  final Map<String, dynamic> transactionMap = {
+    'value': transferencia.valor,
+    'contact': {
+      'name': transferencia.contato.nome,
+      'accountNumber': transferencia.contato.numeroConta
+    }
+  };
+
+  final String transferenciaJson = jsonEncode(transactionMap);
+
+  final Response response =
+      await client.post(Uri.http('192.168.0.108:8080', 'transactions'),
+          headers: {
+            'Content-type': 'application/json',
+            'password': '1000',
+          },
+          body: transferenciaJson);
+  Map<String, dynamic> json = jsonDecode(response.body);
+  final Map<String, dynamic> contatoJson = json['contact'];
+  return Transferencia(
+    json['value'],
+    Contato(
+      0,
+      contatoJson['name'],
+      contatoJson['accountNumber'],
+    ),
+  );
 }
