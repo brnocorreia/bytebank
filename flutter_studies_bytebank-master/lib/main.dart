@@ -1,7 +1,10 @@
 // import 'package:bytebank/database/app_database.dart';
 // import 'package:bytebank/database/app_database.dart';
+// ignore: unused_import
 import 'package:bytebank/models/contato.dart';
+// ignore: unused_import
 import 'package:bytebank/models/transferencia.dart';
+// ignore: unused_import
 import 'package:bytebank/http/web_client.dart';
 // import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +13,6 @@ import 'package:bytebank/screens/dashboard/dashboard.dart';
 
 void main() {
   runApp(BytebankApp());
-  save(Transferencia(200.0, Contato(0, 'Guilherme', 2000)))
-      .then((transferencia) => print(transferencia));
-  findAll().then((transactions) => print('new transactions $transactions'));
 }
 
 // saveTransfer(Transferencia(1, 100.0, 1000)).then((id) {
