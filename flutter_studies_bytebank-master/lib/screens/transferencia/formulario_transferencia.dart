@@ -1,4 +1,4 @@
-import 'package:bytebank/http/web_client.dart';
+import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:bytebank/models/contato.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ class FormularioTransferencia extends StatefulWidget {
 
 class _FormularioTransferenciaState extends State<FormularioTransferencia> {
   final TextEditingController _valueController = TextEditingController();
+  final TransactionWebClient _webClient = TransactionWebClient();
 
   double? get valor => null;
 
@@ -66,7 +67,9 @@ class _FormularioTransferenciaState extends State<FormularioTransferencia> {
                           double.tryParse(_valueController.text);
                       final transferenciaCriada =
                           Transferencia(valor!, widget.contato);
-                      save(transferenciaCriada).then((transferenciaRecebida) {
+                      _webClient
+                          .save(transferenciaCriada)
+                          .then((transferenciaRecebida) {
                         Navigator.pop(context);
                       });
                     },
